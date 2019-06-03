@@ -1,0 +1,28 @@
+:root {
+  --tile-background-color: #ffffff;
+  --tile-empty-background-color: #F2F3F8;
+  --tile-border-size: 1px;
+  --tile-border-color: #bfbfbf;
+  --tile-size: 62px;
+}
+
+.tile {
+  display: inline-block;
+  border-radius: 8px;
+  background-color: var(--tile-background-color);
+  border: var(--tile-border-size) solid var(--tile-border-color);
+  height: var(--tile-size);
+  width: var(--tile-size);
+  text-align: center;
+  line-height: var(--tile-size);
+}
+
+.tile__clickable {
+  cursor: pointer;
+}
+
+.tile__blank {
+  border-color: var(--tile-empty-background-color);
+  background-color: var(--tile-empty-background-color);
+  color: var(--tile-empty-background-color);
+}

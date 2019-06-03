@@ -1,0 +1,9 @@
+:root {
+  --tile-grid-background-color: #F2F3F8;
+  --tile-grid-border-color: #bfbfbf;
+}
+
+.tileGrid {
+  background-color: var(--tile-grid-background-color);
+  border: 1px solid var(--tile-grid-border-color);
+}
