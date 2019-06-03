@@ -1,6 +1,6 @@
 import States from './States';
 
-class Stats {
+export class Stats {
   constructor() {
     this.nodeCount = 0;
     this.expansionCount = 0;
@@ -16,7 +16,7 @@ class Stats {
   }
 }
 
-class BreadthFirst {
+export class BreadthFirst {
   init(state) {
     this.nodes = [{
       state: state,
@@ -52,7 +52,7 @@ class BreadthFirst {
   }
 }
 
-class DepthLimited {
+export class DepthLimited {
   constructor(maxDepth = 5) {
     this.maxDepth = maxDepth;
   }
@@ -94,22 +94,20 @@ class DepthLimited {
   }
 }
 
-class IterativeDeepening {
+export class IterativeDeepening {
   constructor(maxDepth = 15) {
     this.maxDepth = maxDepth;
-    this.depth = 0;
-    this.closed = new States();
   }
 
   init(state) {
-    this.depth = 0;
-    this.closed = new States();
     this.root = {
       state: state,
       depth: 0,
       pathCost: 0
     };
     this.nodes = [this.root];
+    this.depth = 0;
+    this.closed = new States();
     this.stats = new Stats();
   }
 

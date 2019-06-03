@@ -119,9 +119,8 @@ class SlidingTileGrid extends React.Component {
           </li>
         </ul>
         <div className="solution">
-          <p>Solved: {solved === true ?
-            `depth=${search.solution.depth},cost=${search.strategy.stats.nodeCount},bf=${search.strategy.stats.branchingFactor()}`
-            : 'false'}</p>
+          <p>Solved: {solved === true ? 'true' : 'false'}
+            {search ? `, depth: ${search.strategy.depth}, cost: ${search.strategy.stats.nodeCount}, bf: ${search.strategy.stats.branchingFactor()}` :  ''}</p>
           <ol>
             {steps}
           </ol>
