@@ -7,23 +7,39 @@ export default class Shuffle {
     this.settings = settings;
     this.successor = new Successor(settings);
   }
+
   randomIndex(length) {
     return Math.floor(Math.random() * length);
   }
-  shuffle(tiles, times) {
-    const closed = new States();
-    let next = tiles;
-    for (let i = 0; i < times; i++) {
-      const succ = this.successor.successors(next);
+
+  randomSuccessor() {
+    const closed = new States()
+    return (state) => {
+      let randomSucc;
+      const succ = this.successor.successors(state);
       while (succ.length > 0) {
         const randomIndex = this.randomIndex(succ.length);
-        next = succ[randomIndex][1];
-        if (closed.put(next)) {
+        randomSucc = succ[randomIndex];
+        if (closed.put(randomSucc[1])) {
           break;
         }
         succ.splice(randomIndex, 1);
       }
+      return randomSucc;
     }
-    return next;
+  }
+
+  shuffle(tiles, times) {
+    let node = { state: tiles };
+    const randomSucc = this.randomSuccessor();
+    for (let i = 0; i < times; i++) {
+      const succ = randomSucc(node.state);
+      node = {
+        parent: node,
+        action: succ[0],
+        state: succ[1]
+      };
+    }
+    return node;
   }
 }

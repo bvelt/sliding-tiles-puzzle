@@ -56,12 +56,22 @@ class SlidingTileGrid extends React.Component {
 
   handleRandom() {
     const {
-      tiles
+      tiles,
+      prevMoves
     } = this.state;
-    const nextTiles = this.shuffle.shuffle(tiles, 5);
+
+    const shuffled = this.shuffle.shuffle(tiles, 15);
+
+    const randomMoves = [];
+    for (let node = shuffled; node.action; node = node.parent) {
+      randomMoves.unshift([node.action, node.state]);
+    }
+
+    const nextTiles = shuffled.state;
     this.setState((prevState, props) => Object.assign({}, this.state, {
       tiles: nextTiles,
-      nextMoves: this.problem.successor.successors(nextTiles)
+      nextMoves: this.problem.successor.successors(nextTiles),
+      prevMoves: prevMoves.concat(randomMoves)
     }));
   }
 
@@ -83,19 +93,39 @@ class SlidingTileGrid extends React.Component {
       solved = false,
       search,
       tiles,
-      nextMoves
+      nextMoves,
+      prevMoves
     } = this.state;
 
-    const steps = [];
+    const solutionSteps = [];
     if (solved) {
       let key = 0;
       let node = search.solution;
+      const length = node.depth;
       while (node.action) {
-        steps.unshift(
-          <li key={key++}>{`${node.action.type} from ${node.action.fromIndex + 1} to ${node.action.toIndex + 1}`}</li>
-        )
+        solutionSteps.unshift(
+          <tr key={key}>
+            <td>{length - key++}</td>
+            <td>{node.action.type}</td>
+            <td>[{node.action.fromIndex},{node.action.toIndex}]</td>
+            <td>{`[${node.parent.state}]`}</td>
+            <td>{`[${node.state}]`}</td>
+          </tr>);
         node = node.parent;
       }
+    }
+
+    const prevSteps = [];
+    let key = 0;
+    for (let prevStep of prevMoves) {
+      prevSteps.push(
+        <tr key={key++}>
+          <td>{key}</td>
+          <td>{prevStep[0].type}</td>
+          <td>[{prevStep[0].fromIndex},{prevStep[0].toIndex}]</td>
+          <td>{`[${prevStep[1]}]`}</td>
+        </tr>
+      );
     }
 
     return (
@@ -120,10 +150,20 @@ class SlidingTileGrid extends React.Component {
         </ul>
         <div className="solution">
           <p>Solved: {solved === true ? 'true' : 'false'}
-            {search ? `, depth: ${search.strategy.depth}, cost: ${search.strategy.stats.nodeCount}, bf: ${search.strategy.stats.branchingFactor()}` :  ''}</p>
-          <ol>
-            {steps}
-          </ol>
+            {search ? `, depth: ${solutionSteps.length}, cost: ${search.strategy.stats.nodeCount}, bf: ${search.strategy.stats.branchingFactor()}` : ''}</p>
+          <table>
+            <tbody>
+              {solutionSteps}
+            </tbody>
+          </table>
+        </div>
+        <div className="prevMoves">
+          <p>Previous</p>
+          <table>
+            <tbody>
+              {prevSteps}
+            </tbody>
+          </table>
         </div>
       </div>
     );

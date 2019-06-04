@@ -14,7 +14,7 @@ export default class Successor {
     if (fromIndex === -1) {
       throw new Error(`Tiles is missing blank space ${tiles}`);
     }
-    const fromRow = Math.floor(fromIndex / this.settings.rowCount);
+    const fromRow = Math.floor(fromIndex / this.settings.columnCount);
     const fromCol = fromIndex % this.settings.columnCount;
 
     const actions = [];
