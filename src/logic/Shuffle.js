@@ -20,7 +20,7 @@ export default class Shuffle {
       while (succ.length > 0) {
         const randomIndex = this.randomIndex(succ.length);
         randomSucc = succ[randomIndex];
-        if (closed.put(randomSucc[1])) {
+        if (closed.addLastIfAbsent(randomSucc[1])) {
           break;
         }
         succ.splice(randomIndex, 1);

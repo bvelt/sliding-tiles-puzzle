@@ -1,4 +1,4 @@
-import States from './States';
+import States, { stateEquals } from './States';
 import { defaultSettings } from './Settings';
 
 export class Stats {
@@ -138,7 +138,7 @@ export class IterativeDeepening {
     if (node.depth < this.depth) {
       this.stats.incrementExpansionCount();
       for (let [action, state] of this.problem.successor.successors(node.state)) {
-        if (this.closed.put(state)) {
+        if (this.closed.addLastIfAbsent(state)) {
           this.stats.incrementNodeCount();
           this.nodes.unshift({
             state: state,
@@ -221,9 +221,10 @@ export class GreedyBestFirst {
   }
 
   expand(node) {
+
     this.stats.incrementExpansionCount();
     for (let [action, state] of this.problem.successor.successors(node.state)) {
-      if (this.closed.put(state)) {
+      if (this.closed.addLastIfAbsent(state)) {
         this.stats.incrementNodeCount();
         this.nodes.unshift(this.createNode(node, state, action, node.depth + 1));
       }
@@ -268,11 +269,22 @@ export class AStar {
   }
 
   expand(node) {
+    this.closed.addLast(node.state);
     this.stats.incrementExpansionCount();
     for (let [action, state] of this.problem.successor.successors(node.state)) {
-      if (this.closed.put(state)) {
-        this.stats.incrementNodeCount();
-        this.nodes.push(this.createNode(node, state, action, node.depth + 1));
+      if (!this.closed.contains(state)) {
+        const child = this.createNode(node, state, action, node.depth + 1);
+        const prevIndex = this.nodes.findIndex(prev => stateEquals(prev.state, child.state));
+        if (prevIndex !== -1) {
+          const prev = this.nodes[prevIndex];
+          if (child.depth < prev.depth) {
+            this.nodes.splice(prevIndex, 1, child);
+          }
+        }
+        else {
+          this.stats.incrementNodeCount();
+          this.nodes.push(child);
+        }
       }
     }
     this.nodes.sort(pathCostComparator);
