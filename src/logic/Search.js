@@ -206,7 +206,6 @@ export class GreedyBestFirst {
     if (!this.hasNext()) {
       throw new Error("No candidate nodes remaining")
     }
-
     return this.nodes.shift();
   }
 
@@ -221,7 +220,6 @@ export class GreedyBestFirst {
   }
 
   expand(node) {
-
     this.stats.incrementExpansionCount();
     for (let [action, state] of this.problem.successor.successors(node.state)) {
       if (this.closed.addLastIfAbsent(state)) {
@@ -254,7 +252,6 @@ export class AStar {
     if (!this.hasNext()) {
       throw new Error("No candidate nodes remaining")
     }
-
     return this.nodes.shift();
   }
 
@@ -268,18 +265,26 @@ export class AStar {
     };
   }
 
+  findIndex(state) {
+    return this.nodes.findIndex(node => stateEquals(node.state, state));
+  }
+
+  retainBest(index, other) {
+    const prev = this.nodes[index];
+    if (other.depth < prev.depth) {
+      this.nodes.splice(index, 1, other);
+    }
+  }
+
   expand(node) {
     this.closed.addLast(node.state);
     this.stats.incrementExpansionCount();
     for (let [action, state] of this.problem.successor.successors(node.state)) {
       if (!this.closed.contains(state)) {
         const child = this.createNode(node, state, action, node.depth + 1);
-        const prevIndex = this.nodes.findIndex(prev => stateEquals(prev.state, child.state));
+        const prevIndex = this.findIndex(state);
         if (prevIndex !== -1) {
-          const prev = this.nodes[prevIndex];
-          if (child.depth < prev.depth) {
-            this.nodes.splice(prevIndex, 1, child);
-          }
+          this.retainBest(prevIndex, child);
         }
         else {
           this.stats.incrementNodeCount();

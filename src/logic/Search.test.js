@@ -101,6 +101,38 @@ describe('Search', () => {
       expect(strategy.nodes.length).toEqual(1);
     });
   });
+  describe('AStar', () => {
+    const strategy = new search.AStar();
+    it('should initialize from problem initial state', () => {
+      strategy.init(problem);
+      expect(strategy.nodes.length).toEqual(1);
+      expect(strategy.nodes[0].state).toEqual(problem.initialState);
+    });
+    it('should iterate nodes', () => {
+      strategy.init(problem);
+      expect(strategy.hasNext()).toBeTruthy();
+      expect(strategy.next().state).toEqual(problem.initialState);
+      expect(strategy.hasNext()).toBeFalsy();
+      expect(() => strategy.next()).toThrow();
+    });
+    it('should expand initial state with successors', () => {
+      strategy.init(problem);
+      strategy.expand(strategy.next());
+      expect(strategy.nodes.length).toEqual(2);
+    });
+    it('should retain node with lowest cost if state is same', () => {
+      strategy.init(problem);
+      strategy.expand(strategy.next());
+      const first = strategy.nodes[0];
+      const second = Object.assign({}, first, {
+        depth: first.depth - 1
+      });
+      strategy.retainBest(0, second);
+      expect(strategy.nodes[0]).toEqual(second);
+      strategy.retainBest(0, first);
+      expect(strategy.nodes[0]).toEqual(second);
+    })
+  });
   describe('Searcher', () => {
     it('should finish searching at goal state', () => {
       const strategy = new search.BreadthFirst();
