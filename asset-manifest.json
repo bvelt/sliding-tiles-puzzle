@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/sliding-tiles-puzzle/static/css/main.1d101630.chunk.css",
+    "main.js": "/sliding-tiles-puzzle/static/js/main.d2b6a60c.chunk.js",
+    "main.js.map": "/sliding-tiles-puzzle/static/js/main.d2b6a60c.chunk.js.map",
+    "runtime~main.js": "/sliding-tiles-puzzle/static/js/runtime~main.7ff0f980.js",
+    "runtime~main.js.map": "/sliding-tiles-puzzle/static/js/runtime~main.7ff0f980.js.map",
+    "static/js/2.60e0bc6e.chunk.js": "/sliding-tiles-puzzle/static/js/2.60e0bc6e.chunk.js",
+    "static/js/2.60e0bc6e.chunk.js.map": "/sliding-tiles-puzzle/static/js/2.60e0bc6e.chunk.js.map",
+    "index.html": "/sliding-tiles-puzzle/index.html",
+    "precache-manifest.f980a5aa6354c24359651e67065e9202.js": "/sliding-tiles-puzzle/precache-manifest.f980a5aa6354c24359651e67065e9202.js",
+    "service-worker.js": "/sliding-tiles-puzzle/service-worker.js",
+    "static/css/main.1d101630.chunk.css.map": "/sliding-tiles-puzzle/static/css/main.1d101630.chunk.css.map",
+    "static/media/logo.svg": "/sliding-tiles-puzzle/static/media/logo.5d5d9eef.svg"
+  }
+}
