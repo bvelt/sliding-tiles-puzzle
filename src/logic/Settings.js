@@ -1,5 +1,7 @@
 export class Settings {
-  constructor(columnCount = 4, rowCount = columnCount) {
+  static DEFAULT_SIZE = 3;
+
+  constructor(columnCount = Settings.DEFAULT_SIZE, rowCount = columnCount) {
     this.columnCount = columnCount;
     this.rowCount = rowCount;
     this.blankSpace = rowCount * columnCount;

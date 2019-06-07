@@ -6,4 +6,5 @@
 .tileGrid {
   background-color: var(--tile-grid-background-color);
   border: 1px solid var(--tile-grid-border-color);
+  margin: 0 auto;
 }

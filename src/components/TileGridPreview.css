@@ -1,0 +1,38 @@
+:root {
+  --tile-prev-background-color: #ffffff;
+  --tile-prev-empty-background-color: #F2F3F8;
+  --tile-prev-border-size: 1px;
+  --tile-prev-border-color: #bfbfbf;
+  --tile-prev-size: 20px;
+}
+
+.tilePreview {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: var(--tile-prev-background-color);
+  border: var(--tile-prev-border-size) solid var(--tile-prev-border-color);
+  height: var(--tile-prev-size);
+  width: var(--tile-prev-size);
+  text-align: center;
+  line-height: var(--tile-prev-size);
+}
+
+.tilePreview__blank {
+  border-color: var(--tile-prev-empty-background-color);
+  background-color: var(--tile-prev-empty-background-color);
+  color: var(--tile-prev-empty-background-color);
+}
+
+.tileGridPreview {
+  background-color: var(--tile-prev-empty-background-color);
+  border: 1px solid var(--tile-prev-border-color);
+  margin: 0 auto;
+}
+
+.tileGridPreview td {
+  vertical-align: top;
+}
+
+.tileGridPreview td.move {
+  font-weight: bold;
+}

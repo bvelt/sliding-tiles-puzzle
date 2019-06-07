@@ -1,0 +1,11 @@
+.solution {
+  text-align: center;
+}
+
+.solution td {
+  vertical-align: top;
+}
+
+.solution td.moved {
+  font-weight: bold;
+}
