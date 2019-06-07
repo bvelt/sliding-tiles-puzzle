@@ -1,3 +1,5 @@
+Exploratory project to build [Sliding Tile Puzzle (15 or 8)](https://en.wikipedia.org/wiki/15_puzzle) in React. Current version [here](https://bvelt.github.io/sliding-tiles-puzzle/).
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -16,6 +18,10 @@ You will also see any lint errors in the console.
 
 Launches the test runner in the interactive watch mode.<br>
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run storybook`
+
+Launches [Storybook](https://storybook.js.org/) runner on random port.
 
 ### `npm run build`
 
